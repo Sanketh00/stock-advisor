@@ -36,10 +36,11 @@ stock-advisor/
    ```bash
    git clone https://github.com/your-username/stock-advisor.git
    cd stock-advisor
-pip install -r requirements.txt
-python fetch_prices.py
-python fetch_news.py
-fetch stock_advisor.py
+   pip install -r requirements.txt
+   python fetch_prices.py
+   python fetch_news.py
+   python stock_advisor.py
+
 
 ✨ To Do
  Add live price tracker
