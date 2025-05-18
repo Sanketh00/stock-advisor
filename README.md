@@ -20,7 +20,15 @@ A smart stock recommendation system that uses sentiment analysis, technical indi
 
 ## 🗂️ Project Structure
 
-<pre> ## 🗂️ Project Structure ``` stock-advisor/ ├── stock_advisor.py # Main recommendation script ├── backtest.py # Backtesting logic ├── output/ # Output CSVs ├── data/ # Symbol lists (e.g. Nifty500, Microcap250) ├── requirements.txt # Python dependencies └── README.md # You're reading this ``` </pre>
+<pre>
+stock-advisor/
+├── stock_advisor.py # Main recommendation script
+├── backtest.py # Backtesting logic
+├── output/ # Output CSVs
+├── data/ # Symbol lists (e.g. Nifty500, Microcap250)
+├── requirements.txt # Python dependencies
+└── README.md # You're reading this
+ </pre>
 
 
 ## 🚀 How to Run
