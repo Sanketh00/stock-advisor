@@ -43,9 +43,7 @@ stock-advisor/
    python stock_advisor.py
 
 
-✨ To Do
- Add live price tracker
-
- Integrate Telegram/Email alerts
-
- Deploy as a web app
+## ✨ To Do
+1. Add live price tracker
+2.  Integrate Telegram/Email alerts
+3.   Deploy as a web app
