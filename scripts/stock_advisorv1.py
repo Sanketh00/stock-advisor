@@ -6,22 +6,52 @@ import time
 # Setup logging
 logging.basicConfig(level=logging.INFO, filename='stock_advisor.log', format='%(asctime)s - %(message)s')
 
+import pandas as pd
+import logging
+
 def load_combined_data(csv_path='output/combined_data.csv'):
-    logging.info("Loading combined_data.csv")
+    """
+    Load and process combined stock data from a CSV file, removing duplicates and validating data.
+
+    Args:
+        csv_path (str): Path to the CSV file (default: 'output/combined_data.csv').
+
+    Returns:
+        pd.DataFrame: Processed DataFrame with validated columns, filtered data, and calculated moving average.
+
+    Raises:
+        FileNotFoundError: If the CSV file cannot be loaded.
+        ValueError: If required columns are missing.
+    """
+    logging.info(f"Loading data from {csv_path}")
     try:
         df = pd.read_csv(csv_path)
     except Exception as e:
-        logging.error(f"Failed to load combined_data.csv: {str(e)}")
+        logging.error(f"Failed to load {csv_path}: {str(e)}")
         raise
+
+    # Validate required columns
     required_cols = ['symbol', 'close', 'avg_sentiment', 'rsi', 'macd']
     missing_cols = [col for col in required_cols if col not in df.columns]
     if missing_cols:
-        logging.error(f"Missing columns in combined_data.csv: {missing_cols}")
+        logging.error(f"Missing columns in {csv_path}: {missing_cols}")
         raise ValueError(f"Missing columns: {missing_cols}")
+
+    # Remove duplicates (assuming duplicates are rows with identical values for all columns)
+    initial_rows = len(df)
+    df = df.drop_duplicates()
+    logging.info(f"Removed {initial_rows - len(df)} duplicate rows")
+
+    # Filter invalid data
     df = df[df['rsi'].between(0, 100)]
     df = df[df['avg_sentiment'].between(-1, 1)]
+
+    # Calculate 50-day moving average if not present
     if 'ma50' not in df.columns and 'symbol' in df.columns:
-        df['ma50'] = df.groupby('symbol')['close'].transform(lambda x: x.rolling(window=50, min_periods=1).mean())
+        df['ma50'] = df.groupby('symbol')['close'].transform(
+            lambda x: x.rolling(window=50, min_periods=1).mean()
+        )
+
     logging.info(f"Loaded {len(df)} rows, {len(df['symbol'].unique())} unique symbols")
     return df
 

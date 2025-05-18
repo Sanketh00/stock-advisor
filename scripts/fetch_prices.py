@@ -57,14 +57,14 @@ def fetch_all_technicals(symbols):
 
     return results
 
-def load_stock_list(csv_path='nifty500.csv'):
+def load_stock_list(csv_path='EQUITY_L.csv'):
     df = pd.read_csv(csv_path)
     return df['Symbol'].dropna().astype(str).str.strip().tolist()
 
 if __name__ == "__main__":
     symbols = load_stock_list()
 
-    chunk_size = 50
+    chunk_size = 500
     all_results = []
 
     for i in range(0, len(symbols), chunk_size):

@@ -26,9 +26,9 @@ def analyze_sentiment(titles):
     else:
         return 0
 
-def load_stock_list(csv_path='nifty500.csv'):
+def load_stock_list(csv_path='data/technical_snapshot.csv'):
     df = pd.read_csv(csv_path)
-    return df['Symbol'].dropna().astype(str).str.strip().tolist()
+    return df['symbol'].dropna().astype(str).str.strip().tolist()
 
 def fetch_sentiment_for_symbol(symbol):
     try:
@@ -44,7 +44,7 @@ if __name__ == "__main__":
     results = []
 
     # Use max_workers=10 to fetch 10 stocks in parallel
-    with ThreadPoolExecutor(max_workers=50) as executor:
+    with ThreadPoolExecutor(max_workers=500) as executor:
         futures = [executor.submit(fetch_sentiment_for_symbol, s) for s in symbols]
         for i, future in enumerate(as_completed(futures), 1):
             result = future.result()
